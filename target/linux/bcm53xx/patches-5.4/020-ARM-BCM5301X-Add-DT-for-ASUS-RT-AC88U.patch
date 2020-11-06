@@ -1,0 +1,130 @@
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -108,6 +108,7 @@ dtb-$(CONFIG_ARCH_BCM_5301X) += \
+ 	bcm4709-netgear-r7000.dtb \
+ 	bcm4709-netgear-r8000.dtb \
+ 	bcm4709-tplink-archer-c9-v1.dtb \
++	bcm47094-asus-rt-ac88u.dtb \
+ 	bcm47094-dlink-dir-885l.dtb \
+ 	bcm47094-linksys-panamera.dtb \
+ 	bcm47094-luxul-abr-4500.dtb \
+--- /dev/null
++++ b/arch/arm/boot/dts/bcm47094-asus-rt-ac88u.dts
+@@ -0,0 +1,117 @@
++// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
++/*
++ * Broadcom BCM470X / BCM5301X ARM platform code.
++ * DTS for Asus RT-AC88U
++ *
++ * Copyright (C) 2020 Arınç ÜNAL <arinc.unal@gmail.com>
++ */
++
++/dts-v1/;
++
++#include "bcm47094.dtsi"
++#include "bcm5301x-nand-cs0-bch8.dtsi"
++
++/ {
++	compatible = "asus,rt-ac88u", "brcm,bcm47094", "brcm,bcm4708";
++	model = "Asus RT-AC88U";
++
++	chosen {
++		bootargs = "console=ttyS0,115200";
++	};
++
++	memory {
++		device_type = "memory";
++		reg = <0x00000000 0x08000000
++		       0x88000000 0x18000000>;
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		power {
++			label = "bcm53xx:white:power";
++			gpios = <&chipcommon 3 GPIO_ACTIVE_LOW>;
++			linux,default-trigger = "default-on";
++		};
++
++		wan-red {
++			label = "bcm53xx:red:wan";
++			gpios = <&chipcommon 5 GPIO_ACTIVE_HIGH>;
++		};
++
++		lan {
++			label = "bcm53xx:white:lan";
++			gpios = <&chipcommon 21 GPIO_ACTIVE_LOW>;
++		};
++
++		usb2 {
++			label = "bcm53xx:white:usb2";
++			gpios = <&chipcommon 16 GPIO_ACTIVE_LOW>;
++		};
++
++		usb3 {
++			label = "bcm53xx:white:usb3";
++			gpios = <&chipcommon 17 GPIO_ACTIVE_LOW>;
++		};
++
++		wps {
++			label = "bcm53xx:white:wps";
++			gpios = <&chipcommon 19 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		wps {
++			label = "WPS";
++			linux,code = <KEY_WPS_BUTTON>;
++			gpios = <&chipcommon 20 GPIO_ACTIVE_LOW>;
++		};
++
++		reset {
++			label = "Reset";
++			linux,code = <KEY_RESTART>;
++			gpios = <&chipcommon 11 GPIO_ACTIVE_LOW>;
++		};
++
++		wifi {
++			label = "Wi-Fi";
++			linux,code = <KEY_RFKILL>;
++			gpios = <&chipcommon 18 GPIO_ACTIVE_LOW>;
++		};
++
++		led {
++			label = "Backlight";
++			linux,code = <KEY_BRIGHTNESS_ZERO>;
++			gpios = <&chipcommon 4 GPIO_ACTIVE_LOW>;
++		};
++	};
++};
++
++&nandcs {
++	partitions {
++		compatible = "fixed-partitions";
++		#address-cells = <1>;
++		#size-cells = <1>;
++
++		boot@0 {
++			label = "boot";
++			reg = <0x00000000 0x00080000>;
++			read-only;
++		};
++
++		nvram@80000 {
++			label = "nvram";
++			reg = <0x00080000 0x00180000>;
++		};
++
++		firmware@200000 {
++			label = "firmware";
++			reg = <0x00200000 0x07e00000>;
++			compatible = "brcm,trx";
++		};
++	};
++};
