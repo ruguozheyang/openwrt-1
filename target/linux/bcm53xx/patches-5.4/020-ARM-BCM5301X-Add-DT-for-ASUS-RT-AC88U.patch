@@ -42,33 +42,33 @@
 +		compatible = "gpio-leds";
 +
 +		power {
-+			label = "bcm53xx:white:power";
++			label = "white:power";
 +			gpios = <&chipcommon 3 GPIO_ACTIVE_LOW>;
 +			linux,default-trigger = "default-on";
 +		};
 +
 +		wan-red {
-+			label = "bcm53xx:red:wan";
++			label = "red:wan";
 +			gpios = <&chipcommon 5 GPIO_ACTIVE_HIGH>;
 +		};
 +
 +		lan {
-+			label = "bcm53xx:white:lan";
++			label = "white:lan";
 +			gpios = <&chipcommon 21 GPIO_ACTIVE_LOW>;
 +		};
 +
 +		usb2 {
-+			label = "bcm53xx:white:usb2";
++			label = "white:usb2";
 +			gpios = <&chipcommon 16 GPIO_ACTIVE_LOW>;
 +		};
 +
 +		usb3 {
-+			label = "bcm53xx:white:usb3";
++			label = "white:usb3";
 +			gpios = <&chipcommon 17 GPIO_ACTIVE_LOW>;
 +		};
 +
 +		wps {
-+			label = "bcm53xx:white:wps";
++			label = "white:wps";
 +			gpios = <&chipcommon 19 GPIO_ACTIVE_LOW>;
 +		};
 +	};
