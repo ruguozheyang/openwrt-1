@@ -10,7 +10,7 @@
  	bcm47094-luxul-abr-4500.dtb \
 --- /dev/null
 +++ b/arch/arm/boot/dts/bcm47094-asus-rt-ac88u.dts
-@@ -0,0 +1,117 @@
+@@ -0,0 +1,121 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +/*
 + * Broadcom BCM470X / BCM5301X ARM platform code.
@@ -127,4 +127,8 @@
 +			compatible = "brcm,trx";
 +		};
 +	};
++};
++
++&usb3_phy {
++	status = "okay";
 +};
